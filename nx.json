@@ -27,20 +27,8 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
-    },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
-    {
-      "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
       },
-      "exclude": ["apps/lobby-e2e/**/*"]
+      "exclude": ["apps/lobby/**/*", "apps/cabral/**/*"]
     },
     {
       "plugin": "@nx/docker",
@@ -62,6 +50,12 @@
     },
     "test": {
       "dependsOn": ["^build"]
+    },
+    "lint": {
+      "cache": true
+    },
+    "format": {
+      "cache": true
     }
   }
 }

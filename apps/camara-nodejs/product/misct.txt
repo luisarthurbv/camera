@@ -1,0 +1,29 @@
+Interesting:
+    PEC da blindagem ->
+        https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2270800
+        https://escriba.camara.leg.br/escriba-servicosweb/pdf/79236
+    
+    Projeto com muitos Jabutis:
+        https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=2270789
+
+Main goal:
+- Have a centralized place to know about politics (The MVP is about the Camara dos Deputados)
+
+What we will have first:
+- First we will get all the data from https://dadosabertos.camara.leg.br/ to know a bit who the deputados are.
+- Also fetch the data from the original website from camara https://www.camara.leg.br/
+- Model all this data
+- Have an interface on Whats App to ask Questions
+
+In the future:
+- Fetch all the proposicoes and see what they are about using LLMs
+- Fetch all the licitações and know what they are about
+- Link this information to Deputados and Partidos
+
+In the far future:
+- Fetch the everyday data from politician's social network profiles
+
+
+Architecture now:
+- Monolith Nest Application web server - Domain and some interface
+- Python scripts to extract data - it will be a data pipeline in the future - This should be the core of our application

@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2020",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@client/*": ["src/client/*"],
+      "@partidos/*": ["src/partidos/*"],
+      "@deputados/*": ["src/deputados/*"],
+      "@legislaturas/*": ["src/legislaturas/*"],
+      "@membros/*": ["src/membros/*"],
+      "@database/*": ["src/database/*"],
+      "@scraper/*": ["src/scraper/*"],
+      "@commons/*": ["src/commons/*"],
+      "@orgaos/*": ["src/orgaos/*"],
+      "@votacoes/*": ["src/votacoes/*"]
+    },
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false
+  }
+}

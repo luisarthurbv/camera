@@ -24,7 +24,19 @@ readme = 'README.md'
 dependencies = [
   "jupyterlab>=4.3.4",
   "markitdown[pdf]>=0.1.4",
+  "sentence-transformers",
+  "faiss-cpu",
+  "pandas",
+  "numpy>=2.2.6",
+  "chromadb==0.5.20",
+  "ollama",
+  "httpx",
+  "pydantic",
+  "shared-domain",
 ]
+
+[tool.uv.sources]
+shared-domain = { workspace = true }
 
 [project.scripts]
 cabral-hello = "cabral.hello:main"

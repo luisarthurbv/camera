@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lobby - Deputados & Search</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #0f172a;
+        --card-bg: #1e293b;
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+        --accent: #38bdf8;
+        --accent-hover: #0ea5e9;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+      }
+
+      h1 {
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        background: linear-gradient(to right, var(--accent), #f472b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      nav a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: color 0.2s;
+        cursor: pointer;
+      }
+
+      nav a.active {
+        color: var(--accent);
+        border-bottom: 2px solid var(--accent);
+      }
+
+      .view {
+        display: none;
+      }
+
+      .view.active {
+        display: block;
+      }
+
+      .search-container {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      input[type='text'] {
+        flex: 1;
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        border: 1px solid var(--card-bg);
+        background-color: var(--card-bg);
+        color: var(--text-primary);
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      input[type='text']:focus {
+        border-color: var(--accent);
+      }
+
+      button {
+        padding: 0.75rem 2rem;
+        border-radius: 9999px;
+        border: none;
+        background-color: var(--accent);
+        color: var(--bg-color);
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+      }
+
+      button:hover {
+        background-color: var(--accent-hover);
+      }
+
+      button:active {
+        transform: scale(0.95);
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .result-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .card {
+        background-color: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        border: 1px solid transparent;
+        transition:
+          border-color 0.2s,
+          transform 0.2s;
+      }
+
+      .card:hover {
+        border-color: #334155;
+        transform: translateY(-2px);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      .card-title {
+        font-weight: 600;
+        color: var(--accent);
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .text-small {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      .loader {
+        display: none;
+        text-align: center;
+        margin: 2rem 0;
+        color: var(--text-secondary);
+      }
+
+      .card-content {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .card-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--accent);
+      }
+
+      .detail-header {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        align-items: center;
+      }
+
+      .detail-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 1rem;
+        object-fit: cover;
+        border: 3px solid var(--accent);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lobby</h1>
+
+      <nav>
+        <a id="nav-search" class="active" onclick="showView('search')">Search</a>
+        <a id="nav-deputados" onclick="showView('deputados')">Deputados</a>
+      </nav>
+
+      <!-- Search View -->
+      <div id="view-search" class="view active">
+        <div class="search-container">
+          <input
+            type="text"
+            id="queryInput"
+            placeholder="Ask something..."
+            onkeypress="if(event.key==='Enter') search()"
+          />
+          <button onclick="search()">Search</button>
+        </div>
+        <div class="loader" id="search-loader">Searching...</div>
+        <div id="search-results" class="result-list"></div>
+      </div>
+
+      <!-- Deputados View -->
+      <div id="view-deputados" class="view">
+        <div class="loader" id="deputados-loader">Loading deputados...</div>
+        <div id="deputados-results" class="results-grid"></div>
+      </div>
+
+      <!-- Deputado Detail View -->
+      <div id="view-deputado-detail" class="view">
+        <div style="margin-bottom: 2rem;">
+          <button onclick="showView('deputados')">← Back to Deputados</button>
+        </div>
+        <div class="loader" id="deputado-detail-loader">Loading details...</div>
+        <div id="deputado-detail-content"></div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

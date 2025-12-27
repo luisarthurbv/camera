@@ -45,10 +45,11 @@
       "options": {
         "lintFilePatterns": [
           "cabral",
-          "tests"
+          "tests",
+          "scripts",
+          "notebooks"
         ]
-      },
-      "cache": true
+      }
     },
     "format": {
       "executor": "@nxlv/python:ruff-format",
@@ -56,10 +57,11 @@
       "options": {
         "filePatterns": [
           "cabral",
-          "tests"
+          "tests",
+          "scripts",
+          "notebooks"
         ]
-      },
-      "cache": true
+      }
     },
     "test": {
       "executor": "@nxlv/python:run-commands",
@@ -86,6 +88,13 @@
       "executor": "@nxlv/python:run-commands",
       "options": {
         "command": "uv run jupyter lab",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "seed": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "uv run python scripts/seed.py",
         "cwd": "{projectRoot}"
       }
     }

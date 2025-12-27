@@ -1,0 +1,79 @@
+{
+  "name": "shared-domain",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/shared-domain/shared_domain",
+  "targets": {
+    "lock": {
+      "executor": "@nxlv/python:lock",
+      "options": {
+        "update": false
+      }
+    },
+    "sync": {
+      "executor": "@nxlv/python:sync",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nxlv/python:ruff-check",
+      "outputs": [],
+      "options": {
+        "lintFilePatterns": [
+          "shared_domain",
+          "tests",
+          "migrations"
+        ]
+      }
+    },
+    "format": {
+      "executor": "@nxlv/python:ruff-format",
+      "outputs": [],
+      "options": {
+        "filePatterns": [
+          "shared_domain",
+          "tests",
+          "migrations"
+        ]
+      }
+    },
+    "build": {
+      "executor": "@nxlv/python:build",
+      "outputs": ["{projectRoot}/dist"],
+      "options": {
+        "outputPath": "{projectRoot}/dist",
+        "publish": false,
+        "lockedVersions": true,
+        "bundleLocalDependencies": true
+      }
+    },
+    "migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "uv run alembic upgrade head",
+        "cwd": "libs/shared-domain"
+      }
+    },
+    "update-migration": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "uv run alembic revision --autogenerate -m",
+        "cwd": "libs/shared-domain"
+      }
+    },
+    "infra-up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose up -d",
+        "cwd": "libs/shared-domain"
+      }
+    },
+    "infra-down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose down",
+        "cwd": "libs/shared-domain"
+      }
+    }
+  },
+  "tags": []
+}
